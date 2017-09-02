@@ -3,22 +3,17 @@
 <head>
   <meta charset="UTF-8">
   <title>Train Station</title>
-  <script src="https://www.gstatic.com/firebasejs/4.3.0/firebase.js"></script>
-  <script src="https://code.jquery.com/jquery.js"></script>
-  <script src="assets/script/script.js"></script>
   <!-- Bootstrap -->
   <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css">
+  <link rel="stylesheet" type="text/css" href="assets/css/style.css">
 </head>
 
 <body>
 
 <div class="container">
-
-    <div class="jumbotron">
+    <div class="jumbotron text-light">
         <h1 class="text-center">Any Time is Train Time!</h1>
     </div>
-
-
     <div class="row">
       <div class="col-lg-12">
           <div class="panel panel-default">
@@ -26,12 +21,37 @@
                   <h3 class="panel-title">Current Train Schedule</h3>
               </div>
               <div class="panel-body">
-                  <div class="well"></div>
+
+
+                    <div class="table-responsive">
+                        <table class="table">
+                            <thead>
+                                <tr>
+                                    <th>Train Name</th>
+                                    <th>Destination</th>
+                                    <th>Frequency (min)</th>
+                                    <th>Next Arrival</th>
+                                    <th>Minutes Away</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>Little Engine</td>
+                                    <td>Albany, NY</td>
+                                    <td>30</td>
+                                    <td>10:00a</td>
+                                    <td>10</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+
+
+
               </div>
           </div>
       </div>
     </div>
-
     <div class="row">
         <div class="col-lg-12">
             <div class="panel panel-default">
@@ -62,19 +82,13 @@
             </div>
         </div>
     </div>
-
-
-
-
 </div>
 
 
-
 <script>
-
-
+  <script src="https://www.gstatic.com/firebasejs/4.3.0/firebase.js"></script>
+  <script src="https://code.jquery.com/jquery.js"></script>
+  <script src="assets/script/script.js"></script>
 </script>
-
 </body>
-
 </html>
