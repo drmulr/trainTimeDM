@@ -1,3 +1,6 @@
+body {
+  background-image: url(../images/bright_squares.png);
+}
 .jumbotron {
   background-color: #2E2E2E;
   color: white;

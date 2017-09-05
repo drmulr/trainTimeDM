@@ -3,6 +3,12 @@
 <head>
   <meta charset="UTF-8">
   <title>Train Station</title>
+  <script
+  src="https://code.jquery.com/jquery-3.2.1.slim.js"
+  integrity="sha256-tA8y0XqiwnpwmOIl3SGAcFl2RvxHjA8qp0+1uCGmRmg="
+  crossorigin="anonymous"></script>
+  <script src="https://www.gstatic.com/firebasejs/4.3.0/firebase.js"></script>
+
   <!-- Bootstrap -->
   <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css">
   <link rel="stylesheet" type="text/css" href="assets/css/style.css">
@@ -22,7 +28,6 @@
               </div>
               <div class="panel-body">
 
-
                     <div class="table-responsive">
                         <table class="table">
                             <thead>
@@ -34,7 +39,14 @@
                                     <th>Minutes Away</th>
                                 </tr>
                             </thead>
-                            <tbody>
+                            <tbody class="schedTable">
+                                <tr>
+                                    <td>Little Engine</td>
+                                    <td>Albany, NY</td>
+                                    <td>30</td>
+                                    <td>10:00a</td>
+                                    <td>10</td>
+                                </tr>
                                 <tr>
                                     <td>Little Engine</td>
                                     <td>Albany, NY</td>
@@ -45,8 +57,6 @@
                             </tbody>
                         </table>
                     </div>
-
-
 
               </div>
           </div>
@@ -66,7 +76,7 @@
                         </div>
                         <div class="form-group">
                             <label for="text">Destination </label>
-                            <input type="email" class="form-control" id="destinationInput">
+                            <input type="text" class="form-control" id="destinationInput">
                         </div>
                         <div class="form-group">
                             <label for="text">First Train Time </label>
@@ -76,7 +86,7 @@
                             <label for="text">Frequency (min) </label>
                             <input type="number" class="form-control" id="frequencyInput">
                         </div>
-                        <button type="submit" class="btn btn-default" id="addUser">Submit</button>
+                        <button type="submit" class="btn btn-default" id="addTrain">Submit</button>
                     </form>
                 </div>
             </div>
@@ -85,10 +95,7 @@
 </div>
 
 
-<script>
-  <script src="https://www.gstatic.com/firebasejs/4.3.0/firebase.js"></script>
-  <script src="https://code.jquery.com/jquery.js"></script>
-  <script src="assets/script/script.js"></script>
-</script>
+
+<script src="assets/script/script.js"></script>
 </body>
 </html>
