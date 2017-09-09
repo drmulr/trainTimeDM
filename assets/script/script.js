@@ -11,21 +11,12 @@ var config = {
 
 //config data accurate for trains above.
 
-
     var db = firebase.database();
     var trainName = "";
     var destination = "";
     var frequency = 0;
     var nextArr = 0;
     var minAway = 0;
-
-    //calculate current time
-    var t = new Date();
-    var time = t.getHours() + ":" + t.getMinutes();
-    console.log("Hrs + Mins: " + time);
-    console.log( new Date($.now()));
-
-
 
 //click submit. grabbing the values of each input, assigning them a variable on click
   $("#addTrain").on("click", function() {
@@ -43,31 +34,44 @@ var config = {
           frequency: frequency,
           dateAdded: firebase.database.ServerValue.TIMESTAMP
       });
-
-
       console.log(trainName);
       console.log(destination);
       console.log(firstTrainTime);
       console.log(frequency);
   });
-//lastly, adding the well at bottom, and listing all the cats:
-  db.ref().orderByChild("dateAdded").limitToLast(3).on("child_added",function(snapshot){
+
+  db.ref().orderByChild("dateAdded").limitToLast(1).on("child_added",function(snapshot){
       var tName = snapshot.val().trainName;
       var dest = snapshot.val().destination;
       var freq = snapshot.val().frequency;
+        console.log("Frequency: " + freq + " min");
+      var currTime = firebase.database.ServerValue.TIMESTAMP;
+      //First Train Time:
+      var first = moment(snapshot.val().firstTrainTime, "hmm").format("HH:mm");
+        console.log("First Train Time: " + first);
+      //Current Time:
+      var now = moment().format("HH:mm");
+        console.log("Now: " + now);
+        console.log("Now + interval: " + moment().add(freq, 'm').format("HH:mm"));
 
 
-      console.log("Test Snapshot: " + JSON.stringify(snapshot));
+      //calculate current time
+      // var t = new Date();
+      // var time = t.getHours() + ":" + t.getMinutes();
+      // console.log("Hrs + Mins: " + time);
+      // console.log( new Date($.now()));
+      // console.log("Current Time: " + JSON.stringify(currTime));
 
-      $(".schedTable").append("<tr>" + "<td>" + tName + "</td>" + "<td>" + dest + "</td>" + "<td>" + freq + "</td>" + "</tr>");
+
+      // var a = moment();
+      //   console.log("Moment: " + a.format());
+      //   console.log("Now plus 1 month: " + a.add(1, "month").format());
+      // console.log("hours + min: " + a.hours() + a.minutes());
+
+
+      // console.log("Test Snapshot + Date Added: " + JSON.stringify(snapshot.dateAdded));
+      $(".schedTable").append("<tr>" + "<td>" + tName + "</td>" + "<td>" + dest + "</td>" + "<td>" + freq +
+      "<td>"+now+"</td>" + "<td>"+(now+"+"+freq)+"</td>"+ "</tr>");
+
+      //need calculate future time based on firstTrainTime and frequency
   })
-
-//grabs that data, throws it into the html from firebase!
-// db.ref().on("value",function(snapshot){
-//orderByChild = orders by date added...
-  // db.ref().orderByChild("dateAdded").limitToLast(1).on("child_added",function(snapshot){
-  //   $("#nameDisplay").html(snapshot.val().name);
-  //   $("#emailDisplay").html(snapshot.val().email);
-  //   $("#ageDisplay").html(snapshot.val().age);
-  //   $("#commentDisplay").html(snapshot.val().comment);
-  // });
