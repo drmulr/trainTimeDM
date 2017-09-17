@@ -8,9 +8,7 @@
       messagingSenderId: "415415412563"
     };
     firebase.initializeApp(config);
-
-//config data accurate for trains above.
-
+    //declaring some initial variables:
     var db = firebase.database();
     var trainName = "";
     var destination = "";
@@ -18,7 +16,7 @@
     var nextArr = 0;
     var minAway = 0;
 
-//click submit. grabbing the values of each input, assigning them a variable on click
+  //adding on click event - grabbing inputs from form inputs:
   $("#addTrain").on("click", function() {
       event.preventDefault();
       trainName = $("#nameInput").val().trim();
@@ -26,7 +24,7 @@
       firstTrainTime = $("#timeInput").val().trim();
       frequency = $("#frequencyInput").val().trim();
 
-      //need use push - allows us to store data within unique keys
+      //utilizing push - enables add multiple records vs set:
       db.ref().push({
           trainName: trainName,
           destination: destination,
@@ -34,42 +32,23 @@
           frequency: frequency,
           dateAdded: firebase.database.ServerValue.TIMESTAMP
       });
-      console.log(trainName);
-      console.log(destination);
-      console.log(firstTrainTime);
-      console.log(frequency);
   });
-
+  //adding on child_added event - each time new train added, this fires:
+  //can add .limitToLast() after orderByChild
   db.ref().orderByChild("dateAdded").limitToLast(5).on("child_added",function(snapshot){
+      //creating variables based on database information:
       var tName = snapshot.val().trainName;
       var dest = snapshot.val().destination;
       var freq = snapshot.val().frequency;
-        console.log("Frequency: " + freq + " min");
       var currTime = firebase.database.ServerValue.TIMESTAMP;
+
       //First Train Time:
-      var first = moment(snapshot.val().firstTrainTime, "hmm").format("HH:mm");
-        console.log("First Train Time: " + first);
-      //Current Time:
-      var now = moment().format("HH:mm:ss");
-        console.log("Now: " + now);
-        console.log("Now + interval: " + moment().add(freq, 'm').format("HH:mm:ss"));
+      var first = moment(snapshot.val().firstTrainTime, "hhmm").format("HH:mm");
+      // First Time (pushed back 1 year to make sure it comes before current time) in UNIX format here
+      console.log("FIRST: " + first);
 
-      var m = moment([7, 15, 16]);
-      console.log("To String: " + m.toString());
-
-      console.log(moment().add("minute", now).toString());
-
-      // var d = moment.duration(freq, "minutes");
-      // console.log("Duration in Min: " + d);
-
-      //BELOW GRABBED FROM ACTIVITIES
-      // Assumptions
-      var tFrequency = freq;
-      // Time is 3:30 AM
-      var firstTime = first;
-      // First Time (pushed back 1 year to make sure it comes before current time)
-      var firstTimeConverted = moment(firstTime, "hh:mm").subtract(1, "years");
-          console.log(firstTimeConverted);
+      var firstTimeConverted = moment(first, "hh:mm").subtract(1, "years");
+          console.log("FIRST TIME CONVERTED: " + firstTimeConverted);
       // Current Time
       var currentTime = moment();
           console.log("CURRENT TIME: " + moment(currentTime).format("hh:mm"));
@@ -77,23 +56,21 @@
       var diffTime = moment().diff(moment(firstTimeConverted), "minutes");
           console.log("DIFFERENCE IN TIME: " + diffTime);
       // Time apart (remainder)
-      var tRemainder = diffTime % tFrequency;
+      var tRemainder = diffTime % freq;
           console.log(tRemainder);
       // Minute Until Train
-      var tMinutesTillTrain = tFrequency - tRemainder;
+      var tMinutesTillTrain = freq - tRemainder;
           console.log("MINUTES TILL TRAIN: " + tMinutesTillTrain);
       // Next Train
       var nextTrain = moment().add(tMinutesTillTrain, "minutes").format("hh:mm");
           console.log("ARRIVAL TIME: " + moment(nextTrain).format("hh:mm"));
 
-
-
-
       // console.log("Test Snapshot + Date Added: " + JSON.stringify(snapshot.dateAdded));
-      $(".schedTable").append("<tr>" + "<td>" + tName + "</td>" + "<td>" + dest + "</td>" + "<td>" + freq +
-      "<td>"+ nextTrain +"</td>" + "<td>"+ tMinutesTillTrain +"</td>"+ "</tr>");
-
-      //need calculate future time based on firstTrainTime and frequency
-
-
+      $(".schedTable").append("<tr>" +
+          "<td>"+tName+"</td>" +
+          "<td>"+dest+"</td>" +
+          "<td>"+freq+"</td>"+
+          "<td>"+nextTrain+"</td>" +
+          "<td>"+tMinutesTillTrain+"</td>" +
+          "</tr>");
   })

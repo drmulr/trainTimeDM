@@ -1,7 +1,17 @@
 body {
   background-image: url(../images/bright_squares.png);
+  font-family: 'News Cycle', sans-serif;
 }
 .jumbotron {
-  background-color: #2E2E2E;
-  color: white;
+  background-color: #A0C1C4;
+  color: black;
 }
+.panel-heading {
+  background-color: #4A506B;
+}
+.panel {
+  background-color: #D6D9DB;
+}
+
+
+/*#D6D9DB (lt gray),#A0C1C4 (turquise),#4A506B (dk lt blue),#313950 (dk blue),#1C2431 dk,
