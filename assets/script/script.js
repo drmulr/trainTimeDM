@@ -16,13 +16,6 @@
     var nextArr = 0;
     var minAway = 0;
 
-    // firebase.auth().createUserWithEmailAndPassword(email, password).catch(function(error) {
-    // // Handle Errors here.
-    // var errorCode = error.code;
-    // var errorMessage = error.message;
-    // // ...
-    // });
-
   //adding on click event - grabbing inputs from form inputs:
   $("#addTrain").on("click", function() {
       event.preventDefault();
@@ -84,4 +77,8 @@
           "<td>"+tMinutesTillTrain+"</td>" +
           "</tr>");
       $(".spotlightTrain").html(tName + "!");
-  })
+  }, function(errorObject) {
+
+      console.log("Errors handled: " + errorObject.code);
+
+  }); 

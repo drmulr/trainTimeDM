@@ -12,6 +12,9 @@ body {
 .panel {
   background-color: #D6D9DB;
 }
+.navbar {
+  text-align: center;
+}
 
 
 /*#D6D9DB (lt gray),#A0C1C4 (turquise),#4A506B (dk lt blue),#313950 (dk blue),#1C2431 dk,
